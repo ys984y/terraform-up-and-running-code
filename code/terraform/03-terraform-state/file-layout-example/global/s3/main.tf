@@ -1,16 +1,15 @@
 terraform {
-  required_version = ">= 1.0.0, < 2.0.0"
-
   required_providers {
     aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"
+      source = "hashicorp/aws"
+      version = "4.64.0"
     }
   }
 }
 
 provider "aws" {
-  region = "us-east-2"
+  # Configuration options
+    region= "ap-southeast-2"
 }
 
 resource "aws_s3_bucket" "terraform_state" {
@@ -53,12 +52,15 @@ resource "aws_s3_bucket_public_access_block" "public_access" {
 }
 
 resource "aws_dynamodb_table" "terraform_locks" {
-  name         = var.table_name
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "LockID"
+  name           = var.table_name
+  billing_mode   = "PROVISIONED"
+  hash_key       = "LockID"
+  read_capacity  = 5
+  write_capacity = 5
 
   attribute {
     name = "LockID"
     type = "S"
   }
 }
+

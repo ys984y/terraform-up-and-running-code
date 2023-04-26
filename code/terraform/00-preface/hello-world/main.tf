@@ -1,20 +1,20 @@
 terraform {
-  required_version = ">= 1.0.0, < 2.0.0"
-
   required_providers {
     aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"
+      source = "hashicorp/aws"
+      version = "4.64.0"
     }
   }
 }
 
 provider "aws" {
-  region = "us-east-2"
+  # Configuration options
+   region="ap-southeast-2"
 }
 
+
 resource "aws_instance" "example" {
-  ami           = "ami-0fb653ca2d3203ac1"
+  ami           = "ami-0f6ad051716c81af1"
   instance_type = "t2.micro"
 }
 
